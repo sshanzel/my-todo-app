@@ -1,3 +1,5 @@
+### `this was developed with Prettier, code formatting may seem odd as it is configured based on my preference`
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
