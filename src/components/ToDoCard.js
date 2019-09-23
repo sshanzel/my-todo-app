@@ -4,10 +4,8 @@ import TextField from "@material-ui/core/TextField";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import Fab from "@material-ui/core/Fab";
 import DeleteIcon from "@material-ui/icons/Delete";
-import CheckIcon from "@material-ui/icons/Check";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import SaveIcon from "@material-ui/icons/Save";
 import UndoIcon from "@material-ui/icons/Undo";
@@ -76,21 +74,19 @@ export default function ToDoCard({ todo, onChange, onDelete, onSave }) {
         >
           <DeleteIcon />
         </Fab>
-        <Button onClick={() => onSave(todo)} size="small">
-          <Fab
-            onClick={() => onDelete(todo)}
-            aria-label="delete"
-            className={classes.fab}
-          >
-            {todo.id === -1 ? (
-              <SaveIcon />
-            ) : todo.completed ? (
-              <UndoIcon />
-            ) : (
-              <CheckCircleIcon />
-            )}
-          </Fab>
-        </Button>
+        <Fab
+          onClick={() => onSave(todo)}
+          aria-label="delete"
+          className={classes.fab}
+        >
+          {todo.id === -1 ? (
+            <SaveIcon />
+          ) : todo.completed ? (
+            <UndoIcon />
+          ) : (
+            <CheckCircleIcon />
+          )}
+        </Fab>
       </CardActions>
     </Card>
   );
