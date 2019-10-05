@@ -1,18 +1,29 @@
 import todosService from "../../services/todos.service";
 
 export function retrieveTodos() {
-  const todos = todosService.getMyTodos();
-  return { type: "SET_TODOS", todos };
+  return async function(dispatch) {
+    const todos = await todosService.getMyTodos();
+    return dispatch({ type: "SET_TODOS", todos });
+  };
 }
 
 export function createTodo(todo) {
-  return { type: "CREATE_TODO", todo };
+  return async function(dispatch) {
+    const { data } = await todosService.postTodo(todo);
+    return dispatch({ type: "CREATE_TODO", data });
+  };
 }
 
 export function updateTodo(todo) {
-  return { type: "UPDATE_TODO", todo };
+  return async function(dispatch) {
+    const { data } = await todosService.postTodo(todo);
+    return dispatch({ type: "UPDATE_TODO", todo: data });
+  };
 }
 
 export function deleteTodo(todo) {
-  return { type: "DELETE_TODO", todo };
+  return async function(dispatch) {
+    await todosService.postTodo(todo);
+    return dispatch({ type: "DELETE_TODO", todo });
+  };
 }

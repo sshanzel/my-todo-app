@@ -7,13 +7,7 @@ import App from "./App";
 // import * as serviceWorker from "./serviceWorker";
 
 const rootEl = document.getElementById("root");
-const store = configureStore({
-  todos: {
-    1: { id: 1, title: "Test" },
-    2: { id: 2, title: "Try" },
-    3: { id: 3, title: "Sample" }
-  }
-});
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,16 +1,13 @@
 import React from "react";
-import ToDoCard from "../components/ToDoCard";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import SimpleCard from "../components/Card";
 
 export const ToDoList = ({ todos, onChange, onDelete, onSave }) => {
   return todos.map(todo => (
     <div className="col-md-4" key={todo.id}>
-      <ToDoCard
-        key={todo.id}
-        todo={todo}
-        onChange={onChange}
-        onDelete={onDelete}
-        onSave={onSave}
-      />
+      <ButtonBase focusRipple>
+        <SimpleCard key={todo.id}>Test</SimpleCard>
+      </ButtonBase>
     </div>
   ));
 };

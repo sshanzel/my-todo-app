@@ -1,19 +1,16 @@
-export default function todoReducer(state = {}, action) {
+export default function todoReducer(state = [], action) {
   switch (action.type) {
+    case "SET_TODOS":
+      return [...action.todos];
     case "CREATE_TODO":
-      return {
-        ...state,
-        [Object.keys(state).length + 1]: {
-          ...action.todo,
-          id: Object.keys(state).length + 1
-        }
-      };
+      return [...state, action.todo];
     case "UPDATE_TODO":
-      return { ...state, [action.todo.id]: { ...action.todo } };
+      const todos = [...state];
+      const index = todos.findIndex(t => t._id === action.todo._id);
+      todos[index] = { ...action.todo };
+      return [...todos];
     case "DELETE_TODO":
-      const newState = { ...state };
-      delete newState[action.todo.id];
-      return { ...newState };
+      return state.filter(t => t._id !== action.todo._id);
     default:
       return state;
   }
