@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import ToDoList from "./ToDoList";
 import * as todoActions from "../store/actions/todoActions";
-import ToDoCard from "../components/ToDoCard";
 import AddIconMui from "../components/AddIconMui";
 import Notifications, { notify } from "react-notify-toast";
 
@@ -41,6 +40,8 @@ export class ToDoApp extends React.Component {
     this.props.dispatch(todoActions.updateTodo(todo));
   };
 
+  componentDidMount() {}
+
   render() {
     const { handleNewToDo, handleDelete, handleSave, handleInputChange } = this;
 
@@ -49,19 +50,10 @@ export class ToDoApp extends React.Component {
         <Notifications />
         <div className="row">
           <div className="col-md-4">
-            {this.state.new ? (
-              <ToDoCard
-                todo={this.state.todo}
-                onChange={handleNewToDo}
-                onDelete={handleDelete}
-                onSave={handleSave}
-              />
-            ) : (
-              <AddIconMui
-                onClick={() => this.setState({ ...this.state, new: true })}
-              />
-            )}
+            <AddIconMui />
           </div>
+        </div>
+        <div className="row">
           <ToDoList
             todos={Object.values(this.props.todos)}
             onChange={handleInputChange}

@@ -1,3 +1,10 @@
+import todosService from "../../services/todos.service";
+
+export function retrieveTodos() {
+  const todos = todosService.getMyTodos();
+  return { type: "SET_TODOS", todos };
+}
+
 export function createTodo(todo) {
   return { type: "CREATE_TODO", todo };
 }
