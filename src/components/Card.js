@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   paper: {
-    display: "flex",
-    flexGrow: 1,
+    minWidth: 280,
+    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -16,11 +16,5 @@ const useStyles = makeStyles(theme => ({
 export default function SimpleModal({ children }) {
   const classes = useStyles();
 
-  return (
-    <div className={clx(classes.paper, "full-width")}>
-      <h2 className="simple-modal-title">Text in a modal</h2>
-      <p className="simple-modal-description"></p>
-      {children}
-    </div>
-  );
+  return <div className={clx(classes.paper, "full-width")}>{children}</div>;
 }

@@ -6,42 +6,53 @@ import * as todoActions from "../store/actions/todoActions";
 import AddIconMui from "../components/AddIconMui";
 import SimpleModal from "../components/Modal";
 import ToDoCard from "../components/ToDoCard";
+import { errorToString } from "../helpers/index";
+
+const emptyTodo = {
+  title: "",
+  description: "",
+  completed: false
+};
 
 export class ToDoApp extends React.Component {
   state = {
-    todo: {
-      id: -1,
-      title: "",
-      description: "",
-      completed: false
-    },
-    new: false,
-    open: false
+    todo: { ...emptyTodo },
+    open: false,
+    error: null
   };
 
-  handleNewToDo = (e, key) => {
+  handleInputChange = (e, key) => {
     const todo = { ...this.state.todo, [key]: e.target.value };
     this.setState({ todo });
   };
 
-  handleInputChange = (e, key, todoObj) => {
-    const todo = { ...todoObj, [key]: e.target.value };
-    this.props.dispatch(todoActions.updateTodo(todo));
+  handleDelete = async todo => {
+    if (todo._id) await this.props.dispatch(todoActions.deleteTodo(todo));
+    this.setState({
+      ...this.state,
+      todo: { ...emptyTodo },
+      open: false,
+      error: null
+    });
   };
 
-  handleDelete = todo => {
-    if (todo.id >= 0) return this.props.dispatch(todoActions.deleteTodo(todo));
+  handleSave = async () => {
+    const todo = { ...this.state.todo };
+    try {
+      if (!todo._id) await this.props.dispatch(todoActions.createTodo(todo));
+      else await this.props.dispatch(todoActions.updateTodo(todo));
 
-    this.setState({ todo: { id: -1 }, new: false });
-  };
-
-  handleSave = todoObj => {
-    if (!todoObj.completed) notify.show("Done!", "success");
-    if (todoObj.id === -1)
-      return this.props.dispatch(todoActions.createTodo(todoObj));
-
-    const todo = { ...todoObj, completed: todoObj.completed ? false : true };
-    this.props.dispatch(todoActions.updateTodo(todo));
+      notify.show("Done!", "success");
+      this.setState({
+        ...this.state,
+        todo: { ...emptyTodo },
+        open: false,
+        error: null
+      });
+    } catch (ex) {
+      const error = errorToString(ex && ex.response && ex.response.data);
+      this.setState({ ...this.state, error });
+    }
   };
 
   handleOpen = () => {
@@ -52,6 +63,10 @@ export class ToDoApp extends React.Component {
     this.setState({ ...this.state, open: false });
   };
 
+  handleTodoClick = todo => {
+    this.setState({ ...this.state, open: true, todo });
+  };
+
   componentDidMount() {
     this.props.dispatch(todoActions.retrieveTodos());
   }
@@ -60,12 +75,12 @@ export class ToDoApp extends React.Component {
     const {
       handleOpen,
       handleClose,
+      handleTodoClick,
       handleDelete,
       handleSave,
-      handleNewToDo,
       handleInputChange
     } = this;
-    const { open, todo } = this.state;
+    const { open, todo, error } = this.state;
 
     return (
       <React.Fragment>
@@ -76,18 +91,18 @@ export class ToDoApp extends React.Component {
           </div>
         </div>
         <div className="row">
-          <ToDoList
-            todos={this.props.todos}
-            onChange={handleInputChange}
-            onDelete={handleDelete}
-            onSave={handleSave}
-          />
+          <ToDoList todos={this.props.todos} onClick={handleTodoClick} />
         </div>
-        <SimpleModal open={open} onOpen={handleOpen} onClose={handleClose}>
+        <SimpleModal
+          error={error}
+          open={open}
+          onOpen={handleOpen}
+          onClose={handleClose}
+        >
           <ToDoCard
             todo={todo}
-            onChange={handleNewToDo}
-            onDelete={handleClose}
+            onChange={handleInputChange}
+            onDelete={handleDelete}
             onSave={handleSave}
           />
         </SimpleModal>

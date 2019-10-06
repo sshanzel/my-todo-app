@@ -1,7 +1,7 @@
 import todosService from "../../services/todos.service";
 import _ from "lodash";
 
-const columns = ["title", "description", "due", "completed"];
+const columns = ["title", "description", "due", "completed", "author"];
 
 export function retrieveTodos() {
   return async function(dispatch) {
@@ -19,14 +19,17 @@ export function createTodo(todo) {
 
 export function updateTodo(todo) {
   return async function(dispatch) {
-    const { data } = await todosService.postTodo(_.pick(todo, columns));
+    const { data } = await todosService.patchTodo(
+      todo._id,
+      _.pick(todo, columns)
+    );
     return dispatch({ type: "UPDATE_TODO", todo: data });
   };
 }
 
 export function deleteTodo(todo) {
   return async function(dispatch) {
-    await todosService.postTodo(todo);
+    await todosService.deleteTodo(todo._id, todo);
     return dispatch({ type: "DELETE_TODO", todo });
   };
 }

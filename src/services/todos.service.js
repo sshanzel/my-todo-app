@@ -9,15 +9,12 @@ function postTodo(todo) {
   return http.post(`/todos`, todo);
 }
 
-function patchTodo(todo) {
-  return http.patch(
-    `/todos/${todo._id}`,
-    _.pick(todo, ["title", "description", "due", "completed"])
-  );
+function patchTodo(_id, todo) {
+  return http.patch(`/todos/${_id}`, todo);
 }
 
-function deleteTodo(_id) {
-  return http.delete(`/todos/${_id}`);
+function deleteTodo(_id, todo) {
+  return http.delete(`/todos/${_id}`, todo);
 }
 
 export default {

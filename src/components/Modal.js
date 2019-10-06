@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleModal({ onOpen, onClose, open, children }) {
+export default function SimpleModal({ error, onClose, open, children }) {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
@@ -34,10 +34,10 @@ export default function SimpleModal({ onOpen, onClose, open, children }) {
       onClose={onClose}
     >
       <div style={modalStyle} className={classes.paper}>
-        <h2 id="simple-modal-title">Text in a modal</h2>
-        <p id="simple-modal-description">
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </p>
+        {!error ? null : (
+          <div className="full-width alert alert-danger">{error}</div>
+        )}
+
         {children}
       </div>
     </Modal>
