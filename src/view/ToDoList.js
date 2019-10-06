@@ -1,7 +1,10 @@
 import React from "react";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import SimpleCard from "../components/Card";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Fab from "@material-ui/core/Fab";
+import UndoIcon from "@material-ui/icons/Undo";
 import { makeStyles } from "@material-ui/core/styles";
+import SimpleCard from "../components/Card";
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -9,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const ToDoList = ({ todos, onClick }) => {
+export const ToDoList = ({ todos, onClick, onComplete }) => {
   const classes = useStyles();
 
   return todos.map(todo => (
@@ -20,8 +23,20 @@ export const ToDoList = ({ todos, onClick }) => {
       key={todo._id}
     >
       <SimpleCard>
-        <h2 className="simple-modal-title">{todo.title}</h2>
+        <h2
+          className="simple-modal-title"
+          style={{ textDecoration: todo.completed ? "line-through" : "none" }}
+        >
+          {todo.title}
+        </h2>
         <p clas="simple-modal-description">{todo.description}</p>
+        <Fab
+          aria-label="delete"
+          className={classes.fab}
+          onClick={() => onComplete(todo)}
+        >
+          {todo.completed ? <UndoIcon /> : <CheckCircleIcon />}
+        </Fab>
       </SimpleCard>
     </ButtonBase>
   ));

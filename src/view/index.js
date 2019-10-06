@@ -36,6 +36,12 @@ export class ToDoApp extends React.Component {
     });
   };
 
+  handleComplete = async todo => {
+    const _todo = { ...todo, completed: todo.completed ? false : true };
+    this.setState({ ...this.state, open: false });
+    await this.props.dispatch(todoActions.updateTodo(_todo));
+  };
+
   handleSave = async () => {
     const todo = { ...this.state.todo };
     try {
@@ -78,6 +84,7 @@ export class ToDoApp extends React.Component {
       handleTodoClick,
       handleDelete,
       handleSave,
+      handleComplete,
       handleInputChange
     } = this;
     const { open, todo, error } = this.state;
@@ -91,7 +98,11 @@ export class ToDoApp extends React.Component {
           </div>
         </div>
         <div className="row">
-          <ToDoList todos={this.props.todos} onClick={handleTodoClick} />
+          <ToDoList
+            todos={this.props.todos}
+            onClick={handleTodoClick}
+            onComplete={handleComplete}
+          />
         </div>
         <SimpleModal
           error={error}
