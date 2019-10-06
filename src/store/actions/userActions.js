@@ -9,7 +9,7 @@ export function login(credentials) {
       http.setJwtHeaderAuth(data);
       return dispatch({ type: "SET_USER", user: { token: data } });
     } catch (ex) {
-      const error = errorToString(ex.response.data);
+      const error = errorToString(ex && ex.response && ex.response.data);
       return dispatch({ type: "SET_USER", user: { error } });
     }
   };
@@ -27,7 +27,7 @@ export function register(user) {
       http.setJwtHeaderAuth(data);
       return dispatch({ type: "SET_USER", user: { token: data } });
     } catch (ex) {
-      const error = errorToString(ex.response.data);
+      const error = errorToString(ex && ex.response && ex.response.data);
       return dispatch({ type: "SET_USER", user: { error } });
     }
   };

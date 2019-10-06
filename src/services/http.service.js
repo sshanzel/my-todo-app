@@ -1,12 +1,11 @@
 import axios from "axios";
 
 export const baseUrl =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === "production"
     ? `https://jvzgrc51ve.execute-api.us-east-2.amazonaws.com/dev/api`
-    : `https://localhost:3001/api`;
+    : `http://localhost:3001/api`;
 
 axios.defaults.baseURL = baseUrl;
-
 axios.interceptors.response.use(
   success => {
     return Promise.resolve(success);
@@ -27,7 +26,7 @@ axios.interceptors.response.use(
 );
 
 function setJwtHeaderAuth(jwt) {
-  axios.defaults.headers.common["X-Api-Key"] = jwt;
+  axios.defaults.headers.common["x-auth-token"] = jwt;
 }
 
 export default {
