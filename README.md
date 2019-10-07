@@ -1,4 +1,4 @@
-Live URL: [https://facebook.github.io/create-react-app/docs/running-tests](https://facebook.github.io/create-react-app/docs/running-tests)
+Live URL: [https://todo.thesolevilla.com](https://todo.thesolevilla.com)
 
 ### `this was developed with Prettier, code formatting may seem odd as it is configured based on my preference`
 
