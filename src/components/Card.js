@@ -9,12 +9,13 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3)
+    padding: theme.spacing(2, 4, 3),
+    wordWrap: "break-word"
   }
 }));
 
 export default function SimpleModal({ children }) {
   const classes = useStyles();
 
-  return <div className={clx(classes.paper, "full-width")}>{children}</div>;
+  return <div className={clx(classes.paper)}>{children}</div>;
 }

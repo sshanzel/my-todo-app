@@ -38,7 +38,6 @@ export class ToDoApp extends React.Component {
 
   handleComplete = async todo => {
     const _todo = { ...todo, completed: todo.completed ? false : true };
-    this.setState({ ...this.state, open: false });
     await this.props.dispatch(todoActions.updateTodo(_todo));
   };
 
