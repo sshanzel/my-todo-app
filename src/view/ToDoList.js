@@ -24,7 +24,7 @@ export const ToDoList = ({ todos, onClick, onComplete }) => {
   const classes = useStyles();
 
   return todos.map(todo => (
-    <div style={{ position: "relative" }}>
+    <div key={todo._id} style={{ position: "relative" }}>
       <div className={classes.action} onClick={() => onComplete(todo)}>
         {todo.completed ? <CheckCircleIcon /> : <CheckCircleOutlineIcon />}
       </div>
@@ -32,7 +32,6 @@ export const ToDoList = ({ todos, onClick, onComplete }) => {
         className={classes.button}
         focusRipple
         onClick={() => onClick(todo)}
-        key={todo._id}
       >
         <SimpleCard>
           <h2

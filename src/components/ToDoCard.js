@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Fab from "@material-ui/core/Fab";
@@ -26,9 +26,39 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {}
 }));
 
-export default function ToDoCard({ todo, onChange, onDelete, onSave }) {
+export default function ToDoCard({ todo: todoProps, sideEffect }) {
+  const emptyTodo = { title: "", description: "", completed: false };
+  const [todo, setTodo] = useState({ ...emptyTodo });
   const classes = useStyles();
   const completed = todo.completed ? "filled" : "outlined";
+
+  const handleChange = (key, e) => {
+    setTodo({ ...todo, [key]: e.target.value });
+  };
+
+  const handleDelete = () => {
+    sideEffect();
+    setTodo({ ...emptyTodo });
+
+    if (!todo._id) return;
+  };
+  const handleSave = complete => {
+    let completed = todo.completed;
+
+    if (complete) {
+      setTodo(emptyTodo());
+      completed = !todo.completed;
+    }
+
+    const saveTodo = { ...todo, completed };
+
+    // side effect on save should happen after ajax validation
+    sideEffect();
+  };
+
+  useEffect(() => {
+    setTodo(todoProps);
+  }, [todoProps]);
 
   return (
     <React.Fragment>
@@ -36,7 +66,7 @@ export default function ToDoCard({ todo, onChange, onDelete, onSave }) {
         label="Title"
         className={classes.textField}
         value={todo.title || ""}
-        onChange={e => onChange(e, "title", todo)}
+        onChange={e => handleChange(e, "title")}
         variant={completed}
         margin="normal"
       />
@@ -44,7 +74,7 @@ export default function ToDoCard({ todo, onChange, onDelete, onSave }) {
         label="Description"
         className={classes.textField}
         value={todo.description || ""}
-        onChange={e => onChange(e, "description", todo)}
+        onChange={e => handleChange(e, "description")}
         rows={5}
         multiline={true}
         variant={completed}
@@ -55,20 +85,12 @@ export default function ToDoCard({ todo, onChange, onDelete, onSave }) {
         style={{ width: "100%", marginBottom: 7 }}
         type="date"
         value={todo.due || ""}
-        onChange={e => onChange(e, "due", todo)}
+        onChange={e => handleChange(e, "due")}
       />
-      <Fab
-        onClick={() => onDelete(todo)}
-        aria-label="delete"
-        className={classes.fab}
-      >
+      <Fab onClick={handleDelete} aria-label="delete" className={classes.fab}>
         <DeleteIcon />
       </Fab>
-      <Fab
-        onClick={() => onSave(todo)}
-        aria-label="delete"
-        className={classes.fab}
-      >
+      <Fab onClick={handleSave} aria-label="delete" className={classes.fab}>
         {todo.id === -1 ? (
           <SaveIcon />
         ) : todo.completed ? (

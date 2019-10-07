@@ -1,125 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import ToDoList from "./ToDoList";
-import Notifications, { notify } from "react-notify-toast";
 import * as todoActions from "../store/actions/todoActions";
 import AddIconMui from "../components/AddIconMui";
 import SimpleModal from "../components/Modal";
 import ToDoCard from "../components/ToDoCard";
-import { errorToString } from "../helpers/index";
 
-const emptyTodo = {
-  title: "",
-  description: "",
-  completed: false
+export const ToDoApp = ({ todos, dispatch }) => {
+  const [todo, setTodo] = useState({});
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(todoActions.retrieveTodos());
+  }, []);
+
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col-md-4">
+          <AddIconMui onClick={() => setOpen(true)} />
+        </div>
+      </div>
+      <div className="row">
+        <ToDoList
+          todos={todos}
+          onClick={clicked => {
+            setOpen(true);
+            setTodo(clicked);
+          }}
+        />
+      </div>
+      <SimpleModal
+        open={open}
+        onOpen={() => setOpen(true)}
+        onClose={() => setOpen(false)}
+      >
+        <ToDoCard todo={todo} sideEffect={() => setOpen(false)} />
+      </SimpleModal>
+    </React.Fragment>
+  );
 };
-
-export class ToDoApp extends React.Component {
-  state = {
-    todo: { ...emptyTodo },
-    open: false,
-    error: null
-  };
-
-  handleInputChange = (e, key) => {
-    const todo = { ...this.state.todo, [key]: e.target.value };
-    this.setState({ todo });
-  };
-
-  handleDelete = async todo => {
-    if (todo._id) await this.props.dispatch(todoActions.deleteTodo(todo));
-    this.setState({
-      ...this.state,
-      todo: { ...emptyTodo },
-      open: false,
-      error: null
-    });
-  };
-
-  handleComplete = async todo => {
-    const _todo = { ...todo, completed: todo.completed ? false : true };
-    await this.props.dispatch(todoActions.updateTodo(_todo));
-  };
-
-  handleSave = async () => {
-    const todo = { ...this.state.todo };
-    try {
-      if (!todo._id) await this.props.dispatch(todoActions.createTodo(todo));
-      else await this.props.dispatch(todoActions.updateTodo(todo));
-
-      notify.show("Done!", "success");
-      this.setState({
-        ...this.state,
-        todo: { ...emptyTodo },
-        open: false,
-        error: null
-      });
-    } catch (ex) {
-      const error = errorToString(ex && ex.response && ex.response.data);
-      this.setState({ ...this.state, error });
-    }
-  };
-
-  handleOpen = () => {
-    this.setState({ ...this.state, open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ ...this.state, open: false });
-  };
-
-  handleTodoClick = todo => {
-    this.setState({ ...this.state, open: true, todo });
-  };
-
-  componentDidMount() {
-    this.props.dispatch(todoActions.retrieveTodos());
-  }
-
-  render() {
-    const {
-      handleOpen,
-      handleClose,
-      handleTodoClick,
-      handleDelete,
-      handleSave,
-      handleComplete,
-      handleInputChange
-    } = this;
-    const { open, todo, error } = this.state;
-
-    return (
-      <React.Fragment>
-        <Notifications />
-        <div className="row">
-          <div className="col-md-4">
-            <AddIconMui onClick={handleOpen} />
-          </div>
-        </div>
-        <div className="row">
-          <ToDoList
-            todos={this.props.todos}
-            onClick={handleTodoClick}
-            onComplete={handleComplete}
-          />
-        </div>
-        <SimpleModal
-          error={error}
-          open={open}
-          onOpen={handleOpen}
-          onClose={handleClose}
-        >
-          <ToDoCard
-            todo={todo}
-            onChange={handleInputChange}
-            onDelete={handleDelete}
-            onSave={handleSave}
-          />
-        </SimpleModal>
-      </React.Fragment>
-    );
-  }
-}
 
 function mapStateToProps(state) {
   return {

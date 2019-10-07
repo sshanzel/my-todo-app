@@ -20,15 +20,21 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const TextInput = ({ value, rows, onChange }) => {
+export const TextInput = ({
+  value,
+  rows,
+  label,
+  variant,
+  onChange,
+  customStyle
+}) => {
   const classes = useStyles();
 
   return (
     <TextField
-      id="standard-name"
       label="Title"
       rows={rows}
-      className={classes.textField}
+      className={customStyle || classes.textField}
       value={value || ""}
       onChange={onChange}
       margin="normal"
