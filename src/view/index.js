@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import ToDoList from "./ToDoList";
+import TodoList from "./TodoList";
 import * as todoActions from "../store/actions/todoActions";
 import AddIconMui from "../components/AddIconMui";
 import SimpleModal from "../components/Modal";
-import ToDoCard from "../components/ToDoCard";
+import TodoCard from "./TodoCard";
 
 export const ToDoApp = ({ todos, dispatch }) => {
   const [todo, setTodo] = useState({});
@@ -22,11 +22,11 @@ export const ToDoApp = ({ todos, dispatch }) => {
         </div>
       </div>
       <div className="row">
-        <ToDoList
+        <TodoList
           todos={todos}
-          onClick={clicked => {
+          onClick={clickedCard => {
             setOpen(true);
-            setTodo(clicked);
+            setTodo(clickedCard);
           }}
         />
       </div>
@@ -35,7 +35,7 @@ export const ToDoApp = ({ todos, dispatch }) => {
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
       >
-        <ToDoCard todo={todo} sideEffect={() => setOpen(false)} />
+        <TodoCard todo={todo} sideEffect={() => setOpen(false)} />
       </SimpleModal>
     </React.Fragment>
   );

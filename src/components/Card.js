@@ -1,5 +1,4 @@
 import React from "react";
-import clx from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
@@ -14,8 +13,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SimpleModal({ children }) {
+export const SimpleCard = ({ children, title, description, styles }) => {
   const classes = useStyles();
 
-  return <div className={clx(classes.paper)}>{children}</div>;
-}
+  return (
+    <div className={classes.paper}>
+      <h2 className={styles.header}>{title}</h2>
+      <p>{description}</p>
+      {children}
+    </div>
+  );
+};
+
+export default SimpleCard;
