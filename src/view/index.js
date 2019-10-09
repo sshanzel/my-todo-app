@@ -10,7 +10,9 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
   const [todo, setTodo] = useState({});
   const [open, setOpen] = useState(false);
 
-  useEffect(getMyTodos, []);
+  useEffect(() => {
+    getMyTodos();
+  }, []);
 
   return (
     <React.Fragment>

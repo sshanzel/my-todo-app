@@ -1,6 +1,6 @@
 {
-  "name": "todo-app",
-  "version": "0.1.0",
+  "name": "the-legendary-todo-app",
+  "version": "0.4.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.4.2",

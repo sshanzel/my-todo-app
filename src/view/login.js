@@ -64,10 +64,12 @@ export default function SignIn({ onLogin, onRegister, error }) {
   const handleSubmit = async e => {
     e.preventDefault();
     const { username, password } = credentials;
+    const command = registration
+      ? onRegister
+      : () => onLogin({ username, password });
     setProcessing(true);
-    if (!registration) await onLogin({ username, password });
-    else await onRegister(credentials);
-    setProcessing(false);
+    const error = await command(credentials);
+    if (error) setProcessing(false);
   };
 
   return (
