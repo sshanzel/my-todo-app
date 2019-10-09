@@ -1,5 +1,6 @@
-import todosService from "../../services/todos.service";
 import _ from "lodash";
+import { errorToString } from "../../helpers/index";
+import todosService from "../../services/todos.service";
 
 const columns = ["title", "description", "due", "completed", "author"];
 
@@ -26,7 +27,8 @@ export function updateTodo(todo) {
       dispatch({ type: "UPDATE_TODO", todo });
       await todosService.patchTodo(todo._id, _.pick(todo, columns));
     } catch (ex) {
-      dispatch({ type: "UPDATE_TODO", tmpTodo });
+      dispatch({ type: "UPDATE_TODO", todo: tmpTodo });
+      return { error: errorToString(ex.response.data) };
     }
   };
 }

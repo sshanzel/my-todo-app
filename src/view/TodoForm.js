@@ -50,8 +50,10 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
     dispatch(deleteTodo(todo));
   };
   const handleSave = async () => {
-    await dispatch(todo._id ? updateTodo(todo) : createTodo(todo));
-    if (!todo.title.trim()) return;
+    const command = todo._id ? updateTodo : createTodo;
+    const { error } = await dispatch(command(todo));
+
+    if (!todo.title.trim()) return setTodo({ ...todo, error });
     setTodo({ ...emptyTodo });
     sideEffect();
   };
@@ -62,6 +64,13 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
 
   return (
     <React.Fragment>
+      <center>
+        <h2>To do</h2>
+      </center>
+      {!todo.error ? null : (
+        <div className="alert alert-danger">{todo.error}</div>
+      )}
+
       <TextField
         label="Title"
         margin="normal"
