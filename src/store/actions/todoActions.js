@@ -12,13 +12,22 @@ export function retrieveTodos() {
 }
 
 export function createTodo(todo) {
+  const { error } = validate(todo);
+  if (error) return error;
+
   return async function(dispatch) {
+    const newTodo = { ...todo, _id: 0 };
+
+    dispatch({ type: "CREATE_TODO", todo: newTodo });
     const { data } = await todosService.postTodo(_.pick(todo, columns));
-    dispatch({ type: "CREATE_TODO", todo: data });
+    dispatch({ type: "UPDATE_TODO", todo: data, _id: 0 });
   };
 }
 
 export function updateTodo(todo) {
+  const { error } = validate(todo);
+  if (error) return error;
+
   return async function(dispatch, getState) {
     const { todos } = getState();
     const tmpTodo = todos.find(t => t._id === todo._id);
@@ -42,4 +51,13 @@ export function deleteTodo(todo) {
       dispatch({ type: "CREATE_TODO", todo });
     }
   };
+}
+
+function validate(todo) {
+  // Joi validation here
+
+  if (!todo.title) return { error: "Title can't be empty" };
+
+  // Joi implementation returns an Object whether true or false
+  return {};
 }

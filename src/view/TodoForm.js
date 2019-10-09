@@ -51,9 +51,9 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
   };
   const handleSave = async () => {
     const command = todo._id ? updateTodo : createTodo;
-    const { error } = await dispatch(command(todo));
+    const error = await dispatch(command(todo));
 
-    if (!todo.title.trim()) return setTodo({ ...todo, error });
+    if (error) return setTodo({ ...todo, error });
     setTodo({ ...emptyTodo });
     sideEffect();
   };

@@ -6,7 +6,8 @@ export default function todoReducer(state = [], action) {
       return [...state, action.todo];
     case "UPDATE_TODO":
       const todos = [...state];
-      const index = todos.findIndex(t => t._id === action.todo._id);
+      const todoId = action._id || action.todo._id;
+      const index = todos.findIndex(t => t._id === todoId);
       todos[index] = { ...action.todo };
       return [...todos];
     case "DELETE_TODO":
