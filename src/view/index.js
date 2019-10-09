@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import TodoList from "./TodoList";
-import * as todoActions from "../store/actions/todoActions";
+import { retrieveTodos } from "../store/actions/todoActions";
 import AddIconMui from "../components/AddIconMui";
 import SimpleModal from "../components/Modal";
-import TodoCard from "./TodoCard";
+import TodoForm from "./TodoForm";
 
-export const ToDoApp = ({ todos, dispatch }) => {
+export const ToDoApp = ({ todos, getMyTodos }) => {
   const [todo, setTodo] = useState({});
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    dispatch(todoActions.retrieveTodos());
-  }, []);
+  useEffect(getMyTodos, []);
 
   return (
     <React.Fragment>
@@ -35,7 +33,7 @@ export const ToDoApp = ({ todos, dispatch }) => {
         onOpen={() => setOpen(true)}
         onClose={() => setOpen(false)}
       >
-        <TodoCard todo={todo} sideEffect={() => setOpen(false)} />
+        <TodoForm todo={todo} sideEffect={() => setOpen(false)} />
       </SimpleModal>
     </React.Fragment>
   );
@@ -47,4 +45,13 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ToDoApp);
+function mapDispatchToProps(dispatch) {
+  return {
+    getMyTodos: () => dispatch(retrieveTodos())
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToDoApp);

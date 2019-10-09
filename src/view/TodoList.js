@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import { makeStyles } from "@material-ui/core/styles";
-import SimpleCard from "../components/Card";
+import TodoCard from "./TodoCard";
 import TodoAction from "./TodoAction";
 
 const useStyles = makeStyles(theme => ({
@@ -35,11 +35,11 @@ export const TodoList = ({ todos, onClick }) => {
         className={classes.button}
         onClick={() => onClick(todo)}
       >
-        <SimpleCard
+        <TodoCard
           title={todo.title}
           description={todo.description}
           styles={{ header: todo.completed ? classes.completed : "none" }}
-        ></SimpleCard>
+        ></TodoCard>
       </ButtonBase>
     </div>
   ));

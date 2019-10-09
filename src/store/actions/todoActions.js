@@ -34,8 +34,8 @@ export function updateTodo(todo) {
 export function deleteTodo(todo) {
   return async function(dispatch) {
     try {
-      await todosService.deleteTodo(todo._id, todo);
       dispatch({ type: "DELETE_TODO", todo });
+      await todosService.deleteTodo(todo._id, todo);
     } catch (ex) {
       dispatch({ type: "CREATE_TODO", todo });
     }
