@@ -1,4 +1,3 @@
-import _ from "lodash";
 import http from "./http.service";
 
 function getMyTodos() {

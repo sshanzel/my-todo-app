@@ -14,6 +14,11 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
     getMyTodos();
   }, []);
 
+  const handleCloseModal = () => {
+    setOpen(false);
+    setTodo({});
+  };
+
   return (
     <React.Fragment>
       <div className="row">
@@ -24,18 +29,18 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
       <div className="row">
         <TodoList
           todos={todos}
-          onClick={clickedCard => {
+          onClick={t => {
             setOpen(true);
-            setTodo(clickedCard);
+            setTodo(t);
           }}
         />
       </div>
       <SimpleModal
         open={open}
         onOpen={() => setOpen(true)}
-        onClose={() => setOpen(false)}
+        onClose={handleCloseModal}
       >
-        <TodoForm todo={todo} sideEffect={() => setOpen(false)} />
+        <TodoForm todo={todo} sideEffect={handleCloseModal} />
       </SimpleModal>
     </React.Fragment>
   );

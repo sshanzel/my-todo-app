@@ -13,11 +13,11 @@ export function retrieveTodos() {
 
 export function createTodo(todo) {
   return async function(dispatch) {
-    const newTodo = { ...todo, _id: 0 };
+    const newTodo = { ...todo, _id: 1 };
 
     dispatch({ type: "CREATE_TODO", todo: newTodo });
     const { data } = await todosService.postTodo(_.pick(todo, columns));
-    dispatch({ type: "UPDATE_TODO", todo: data, _id: 0 });
+    dispatch({ type: "UPDATE_TODO", todo: data, _id: 1 });
   };
 }
 
@@ -45,13 +45,4 @@ export function deleteTodo(todo) {
       dispatch({ type: "CREATE_TODO", todo });
     }
   };
-}
-
-function validate(todo) {
-  // Joi validation here
-
-  if (!todo.title) return { error: "Title can't be empty" };
-
-  // Joi implementation returns an Object whether true or false
-  return {};
 }

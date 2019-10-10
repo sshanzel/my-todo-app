@@ -42,11 +42,9 @@ const useStyles = makeStyles(theme => ({
   extendedIcon: {}
 }));
 
-const emptyTodo = { title: "", description: "", completed: false };
-
 export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
   const classes = useStyles();
-  const [todo, setTodo] = useState({ ...emptyTodo });
+  const [todo, setTodo] = useState({});
   const completed = todo.completed ? "filled" : "standard";
 
   const handleChange = (key, e) => {
@@ -56,7 +54,6 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
   };
 
   const handleDelete = () => {
-    setTodo({ ...emptyTodo });
     sideEffect();
 
     if (!todo._id) return;
@@ -69,12 +66,11 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
     if (error) return setTodo({ ...todo, error: error });
 
     sideEffect();
-    setTodo({ ...emptyTodo });
     await dispatch(command(todo));
   };
 
   useEffect(() => {
-    setTodo(todoProps);
+    setTodo({ ...todoProps });
   }, [todoProps]);
 
   return (
@@ -104,8 +100,6 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
         value={todo.description || ""}
         onChange={e => handleChange("description", e)}
       />
-      <br />
-      <br />
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDateTimePicker
           variant="inline"
@@ -113,8 +107,8 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
           label="Due Date"
           value={new Date(todo.due || Date.now())}
           onChange={e => handleChange("due", e)}
-          onError={console.log}
           disablePast
+          margin="normal"
           fullWidth
           format="yyyy/MM/dd HH:mm"
         />
