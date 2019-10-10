@@ -10,7 +10,7 @@ import { login, logout, register } from "./store/actions/userActions";
 function App({ user, dispatch }) {
   return (
     <div className="App">
-      <TodoAppBar user={user} onLogout={() => dispatch(logout())} />
+      <TodoAppBar user={user} onLogout={() => window.location.reload()} />
       <div className="container">
         {user.token ? (
           <ToDoApp />

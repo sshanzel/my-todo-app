@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignIn({ onLogin, onRegister, error }) {
+export default function SignIn({ onLogin, onRegister }) {
   const classes = useStyles();
   const [processing, setProcessing] = useState(false);
   const [registration, setRegistration] = useState(false);
@@ -67,9 +67,11 @@ export default function SignIn({ onLogin, onRegister, error }) {
     const command = registration
       ? onRegister
       : () => onLogin({ username, password });
+
     setProcessing(true);
     const error = await command(credentials);
-    if (error) setProcessing(false);
+    setProcessing(false);
+    setCredentials({ ...credentials, error });
   };
 
   return (
@@ -83,9 +85,9 @@ export default function SignIn({ onLogin, onRegister, error }) {
           The Solevilla Pet Projects
         </Typography>
         <br />
-        {!error ? null : (
+        {!credentials.error ? null : (
           <div className="alert alert-danger" style={{ width: "100%" }}>
-            {error}
+            {credentials.error}
           </div>
         )}
         <form className={classes.form} noValidate>
