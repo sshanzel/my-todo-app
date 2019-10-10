@@ -12,9 +12,6 @@ export function retrieveTodos() {
 }
 
 export function createTodo(todo) {
-  const { error } = validate(todo);
-  if (error) return error;
-
   return async function(dispatch) {
     const newTodo = { ...todo, _id: 0 };
 
@@ -25,9 +22,6 @@ export function createTodo(todo) {
 }
 
 export function updateTodo(todo) {
-  const { error } = validate(todo);
-  if (error) return error;
-
   return async function(dispatch, getState) {
     const { todos } = getState();
     const tmpTodo = todos.find(t => t._id === todo._id);

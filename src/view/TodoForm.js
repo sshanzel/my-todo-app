@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import Fab from "@material-ui/core/Fab";
-import SaveIcon from "@material-ui/icons/Save";
+import DoneIcon from "@material-ui/icons/Done";
 import DeleteIcon from "@material-ui/icons/Delete";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
+import DateFnsUtils from "@date-io/date-fns";
+import {
+  KeyboardDateTimePicker,
+  MuiPickersUtilsProvider
+} from "@material-ui/pickers";
+import todoService from "../services/todos.service";
 import {
   updateTodo,
   deleteTodo,
@@ -24,7 +30,13 @@ const useStyles = makeStyles(theme => ({
   textField: {
     width: "100%"
   },
-  fab: {
+  todoActions: {
+    marginTop: 20
+  },
+  save: {
+    margin: theme.spacing(1)
+  },
+  delete: {
     margin: theme.spacing(1)
   },
   extendedIcon: {}
@@ -35,10 +47,11 @@ const emptyTodo = { title: "", description: "", completed: false };
 export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
   const classes = useStyles();
   const [todo, setTodo] = useState({ ...emptyTodo });
-  const completed = todo.completed ? "filled" : "outlined";
+  const completed = todo.completed ? "filled" : "standard";
 
   const handleChange = (key, e) => {
-    const updatedTodo = { ...todo, [key]: e.target.value };
+    const value = key === "due" ? e : e.target.value;
+    const updatedTodo = { ...todo, [key]: value };
     setTodo(updatedTodo);
   };
 
@@ -49,13 +62,15 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
     if (!todo._id) return;
     dispatch(deleteTodo(todo));
   };
-  const handleSave = async () => {
-    const command = todo._id ? updateTodo : createTodo;
-    if (todo.title) setTodo({ ...emptyTodo });
-    const error = await dispatch(command(todo));
 
-    if (error) return setTodo({ ...todo, error });
+  const handleSave = async () => {
+    const { error } = todoService.validate(todo);
+    const command = todo._id ? updateTodo : createTodo;
+    if (error) return setTodo({ ...todo, error: error });
+
     sideEffect();
+    setTodo({ ...emptyTodo });
+    await dispatch(command(todo));
   };
 
   useEffect(() => {
@@ -68,7 +83,7 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
         <h2>To do</h2>
       </center>
       {!todo.error ? null : (
-        <div className="alert alert-danger">{todo.error}</div>
+        <div className="alert alert-danger mt-5">{todo.error}</div>
       )}
 
       <TextField
@@ -89,19 +104,33 @@ export const TodoForm = ({ todo: todoProps, sideEffect, dispatch }) => {
         value={todo.description || ""}
         onChange={e => handleChange("description", e)}
       />
-      <input
-        type="date"
-        value={todo.due || ""}
-        className="form-control"
-        onChange={e => handleChange(e, "due")}
-        style={{ width: "100%", marginBottom: 7 }}
-      />
-      <Fab onClick={handleDelete} className={classes.fab}>
-        <DeleteIcon />
-      </Fab>
-      <Fab onClick={handleSave} className={classes.fab}>
-        <SaveIcon />
-      </Fab>
+      <br />
+      <br />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDateTimePicker
+          variant="inline"
+          ampm={false}
+          label="Due Date"
+          value={new Date(todo.due || Date.now())}
+          onChange={e => handleChange("due", e)}
+          onError={console.log}
+          disablePast
+          fullWidth
+          format="yyyy/MM/dd HH:mm"
+        />
+      </MuiPickersUtilsProvider>
+      <div className={classes.todoActions}>
+        <Fab onClick={handleSave} className={classes.save} color="primary">
+          <DoneIcon />
+        </Fab>
+        <Fab
+          onClick={handleDelete}
+          className={classes.delete}
+          color="secondary"
+        >
+          <DeleteIcon />
+        </Fab>
+      </div>
     </React.Fragment>
   );
 };

@@ -77,7 +77,13 @@ export default function TodoAppBar({ user, onLogout }) {
               ))}
               {!user.token ? null : (
                 <ExitToAppIcon
-                  style={{ fontSize: "2.2em", marginTop: -15, marginLeft: 50 }}
+                  onClick={onLogout}
+                  style={{
+                    fontSize: "2.2em",
+                    marginTop: -15,
+                    marginLeft: 50,
+                    cursor: "pointer"
+                  }}
                 />
               )}
             </Grid>
