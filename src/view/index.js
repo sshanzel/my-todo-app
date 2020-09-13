@@ -11,7 +11,7 @@ export const ToDoApp = ({todos, getMyTodos}) => {
 
   React.useEffect(() => {
     getMyTodos();
-  }, []);
+  }, [getMyTodos]);
 
   return (
     <div className='flex flex-1 flex-col mt-4'>
