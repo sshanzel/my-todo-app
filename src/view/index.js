@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-import TodoList from "./TodoList";
-import { retrieveTodos } from "../store/actions/todoActions";
-import AddIconMui from "../components/AddIconMui";
-import SimpleModal from "../components/Modal";
-import TodoForm from "./TodoForm";
+import React, {useEffect, useState} from 'react';
+import {connect} from 'react-redux';
+import TodoList from './TodoList';
+import {retrieveTodos} from '../store/actions/todoActions';
+import AddIconMui from '../components/AddIconMui';
+import SimpleModal from '../components/Modal';
+import TodoForm from './TodoForm';
 
-export const ToDoApp = ({ todos, getMyTodos }) => {
+export const ToDoApp = ({todos, getMyTodos}) => {
   const [todo, setTodo] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -21,12 +21,12 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
 
   return (
     <React.Fragment>
-      <div className="row">
-        <div className="col-md-4">
+      <div className='row'>
+        <div className='col-md-4'>
           <AddIconMui onClick={() => setOpen(true)} />
         </div>
       </div>
-      <div className="row">
+      <div className='row'>
         <TodoList
           todos={todos}
           onClick={t => {
@@ -35,11 +35,7 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
           }}
         />
       </div>
-      <SimpleModal
-        open={open}
-        onOpen={() => setOpen(true)}
-        onClose={handleCloseModal}
-      >
+      <SimpleModal open={open} onOpen={() => setOpen(true)} onClose={handleCloseModal}>
         <TodoForm todo={todo} sideEffect={handleCloseModal} />
       </SimpleModal>
     </React.Fragment>
@@ -48,17 +44,14 @@ export const ToDoApp = ({ todos, getMyTodos }) => {
 
 function mapStateToProps(state) {
   return {
-    todos: state.todos
+    todos: state.todos,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getMyTodos: () => dispatch(retrieveTodos())
+    getMyTodos: () => dispatch(retrieveTodos()),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToDoApp);
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoApp);
