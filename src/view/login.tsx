@@ -40,7 +40,7 @@ export const SignIn = () => {
     <div className='flex flex-1 flex-col items-center pt-20'>
       <img alt='Logo' src={Logo} className='w-40' />
       <label className='font-medium text-2xl'>My Pet Projects - Todo App</label>
-      <div className='w-full p-4 justify-center lg:w-1/3 md:w-1/2'>
+      <div className='w-full p-4 justify-center lg:w-1/3 md:w-1/2' style={{maxWidth: '520px'}}>
         {error && <div className='w-full mb-4 flex justify-center text-red-500'>{error}</div>}
         <TSInput
           shadow
@@ -66,7 +66,7 @@ export const SignIn = () => {
           />
         )}
         <TSButton label='Submit' onClick={handleSubmit} disabled={processing} />
-        <div className='flex flex-row flex-1 justify-between'>
+        <div className='flex flex-row flex-1 flex-wrap justify-between'>
           <TSButtonPlain label='Forgot Password?' />
           <TSButtonPlain
             label={
