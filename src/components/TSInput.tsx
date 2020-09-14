@@ -26,7 +26,7 @@ const TSInput: React.FC<TSInputProps> = ({
 
       onInputChange(e.currentTarget.value);
     },
-    [value]
+    [onInputChange]
   );
 
   React.useEffect(() => {

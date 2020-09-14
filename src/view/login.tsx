@@ -1,5 +1,6 @@
 import React from 'react';
 import TSInput from '../components/TSInput';
+import TSButton from '../components/TSButton';
 
 import Logo from '../assets/images/the-solevilla.png';
 
@@ -9,13 +10,9 @@ export const SignIn = () => {
     password: '',
   });
 
-  React.useEffect(() => {
-    console.log(username);
-  }, [username]);
-
   return (
     <div className='flex flex-1 flex-col items-center pt-20'>
-      <img src={Logo} className='w-40' />
+      <img alt='Logo' src={Logo} className='w-40' />
       <label className='font-medium text-2xl'>My Pet Projects - Todo App</label>
       <div className='w-full p-4 justify-center lg:w-1/3 md:w-1/2'>
         <TSInput
@@ -32,6 +29,11 @@ export const SignIn = () => {
           value={password}
           onInputChange={value => setCredentials(state => ({...state, password: value}))}
         />
+        <TSButton label='Submit' />
+        <div className='flex flex-row flex-1 justify-between'>
+          <div>A</div>
+          <div>B</div>
+        </div>
       </div>
     </div>
   );
