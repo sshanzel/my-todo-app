@@ -40,7 +40,7 @@ const TSButton: React.FC<TSButtonProps> = ({label, buttonType = 'PRIMARY'}) => {
   return (
     <button
       className={clx(
-        'text-white px-4 mt-4 w-full py-2',
+        'text-white px-4 mt-4 w-full py-2 focus:outline-none',
         `hover:${button_type.hover}`,
         button_type.base
       )}

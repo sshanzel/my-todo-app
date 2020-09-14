@@ -1,8 +1,10 @@
 import React from 'react';
+import Copyright from './Copyright';
 import TSInput from '../components/TSInput';
 import TSButton from '../components/TSButton';
 
 import Logo from '../assets/images/the-solevilla.png';
+import TSButtonPlain from '../components/TSButtonPlain';
 
 export const SignIn = () => {
   const [{username, password}, setCredentials] = React.useState({
@@ -31,9 +33,10 @@ export const SignIn = () => {
         />
         <TSButton label='Submit' />
         <div className='flex flex-row flex-1 justify-between'>
-          <div>A</div>
-          <div>B</div>
+          <TSButtonPlain label='Forgot Password?' />
+          <TSButtonPlain label='Register' />
         </div>
+        <Copyright />
       </div>
     </div>
   );
