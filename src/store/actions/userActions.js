@@ -6,7 +6,9 @@ export const login = credentials => async dispatch => {
   try {
     const {data} = await authService.login(credentials);
     http.setJwtHeaderAuth(data);
-    return dispatch({type: 'SET_USER', user: {token: data}});
+    const name = credentials.username.split('@');
+
+    return dispatch({type: 'SET_USER', user: {name: name[0], token: data}});
   } catch (ex) {
     return errorToString(ex && ex.response && ex.response.data);
   }
