@@ -1,25 +1,4 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-
-function getModalStyle() {
-  return {
-    top: `50%`,
-    left: `50%`,
-    transform: `translate(-50%, -50%)`,
-  };
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
 export interface SimpleModalProps {
   open: boolean;
@@ -28,24 +7,25 @@ export interface SimpleModalProps {
   onClose: () => void;
 }
 
-const SimpleModal: React.FC<SimpleModalProps> = ({error, onClose, open, children}) => {
-  const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+const WRAPPER_CLASS = 'drawer__wrapper';
+
+const SimpleModal: React.FC<SimpleModalProps> = ({onClose, open, children}) => {
+  const handleClick = (e: React.MouseEvent) => {
+    const el = e.target as HTMLElement;
+
+    if (el.classList.contains(WRAPPER_CLASS)) onClose();
+  };
 
   return (
-    <Modal
-      aria-labelledby='simple-modal-title'
-      aria-describedby='simple-modal-description'
-      open={open}
-      onClose={onClose}
+    <div
+      onClick={handleClick}
+      style={{backgroundColor: '#00000080'}}
+      className={`${WRAPPER_CLASS} ${
+        open ? 'flex' : 'hidden'
+      } fixed top-0 left-0 w-screen h-screen z-10 items-center justify-center p-4`}
     >
-      <div style={modalStyle} className={classes.paper}>
-        {!error ? null : <div className='full-width alert alert-danger'>{error}</div>}
-
-        {children}
-      </div>
-    </Modal>
+      <div className='bg-white w-full p-4 justify-center lg:w-1/3 md:w-1/2'>{children}</div>
+    </div>
   );
 };
 
