@@ -37,11 +37,11 @@ const TSInput: React.FC<TSInputProps> = ({
     <div className={clx(`flex flex-col w-full relative`, className)}>
       <span className='text-xs text-gray-500 absolute -mt-2 ml-4'>{label}:</span>
       <input
+        onChange={e => setText(e.target.value)}
         {...props}
         value={text}
         onBlur={handleBlur}
         className={clx(`w-full p-2 outline-none text-gray-700`, {shadow, border})}
-        onChange={e => setText(e.target.value)}
       />
     </div>
   );

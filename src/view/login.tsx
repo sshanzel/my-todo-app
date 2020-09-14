@@ -42,31 +42,33 @@ export const SignIn = () => {
       <img alt='Logo' src={Logo} className='w-40' />
       <label className='font-medium text-2xl'>My Pet Projects - Todo App</label>
       <ResponsiveBlock>
-        {error && <div className='w-full mb-4 flex justify-center text-red-500'>{error}</div>}
-        <TSInput
-          shadow
-          label='Username'
-          value={username}
-          onInputChange={value => setCredentials(state => ({...state, username: value}))}
-        />
-        <TSInput
-          shadow
-          className='mt-4'
-          label='Password'
-          type='Password'
-          value={password}
-          onInputChange={value => setCredentials(state => ({...state, password: value}))}
-        />
-        {register !== null && (
+        <form action='#' onSubmit={handleSubmit}>
+          {error && <div className='w-full mb-4 flex justify-center text-red-500'>{error}</div>}
+          <TSInput
+            shadow
+            label='Username'
+            value={username}
+            onInputChange={value => setCredentials(state => ({...state, username: value}))}
+          />
           <TSInput
             shadow
             className='mt-4'
-            label='Name'
+            label='Password'
+            type='Password'
             value={password}
-            onInputChange={value => setRegister(value)}
+            onChange={e => setCredentials(state => ({...state, password: e.currentTarget.value}))}
           />
-        )}
-        <TSButton label='Submit' onClick={handleSubmit} disabled={processing} />
+          {register !== null && (
+            <TSInput
+              shadow
+              className='mt-4'
+              label='Name'
+              value={password}
+              onInputChange={value => setRegister(value)}
+            />
+          )}
+          <TSButton label='Submit' onClick={handleSubmit} disabled={processing} />
+        </form>
         <div className='flex flex-row flex-1 flex-wrap justify-between'>
           <TSButtonPlain label='Forgot Password?' />
           <TSButtonPlain
