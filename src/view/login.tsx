@@ -7,6 +7,7 @@ import {registerUser, login} from '../store/actions/userActions';
 
 import Logo from '../assets/images/the-solevilla.png';
 import TSButtonPlain from '../components/TSButtonPlain';
+import ResponsiveBlock from '../components/ResponsiveBlock';
 
 export const SignIn = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ export const SignIn = () => {
     <div className='flex flex-1 flex-col items-center pt-20'>
       <img alt='Logo' src={Logo} className='w-40' />
       <label className='font-medium text-2xl'>My Pet Projects - Todo App</label>
-      <div className='w-full p-4 justify-center lg:w-1/3 md:w-1/2' style={{maxWidth: '520px'}}>
+      <ResponsiveBlock>
         {error && <div className='w-full mb-4 flex justify-center text-red-500'>{error}</div>}
         <TSInput
           shadow
@@ -78,7 +79,7 @@ export const SignIn = () => {
           />
         </div>
         <Copyright />
-      </div>
+      </ResponsiveBlock>
     </div>
   );
 };
