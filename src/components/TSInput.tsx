@@ -15,6 +15,7 @@ const TSInput: React.FC<TSInputProps> = ({
   className,
   shadow,
   border,
+  onChange,
   onInputChange,
   ...props
 }) => {
@@ -29,6 +30,19 @@ const TSInput: React.FC<TSInputProps> = ({
     [onInputChange]
   );
 
+  const handleChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.persist();
+
+      setText(e.target.value);
+
+      if (!onChange) return;
+
+      onChange(e);
+    },
+    [onChange]
+  );
+
   React.useEffect(() => {
     setText(value || '');
   }, [value]);
@@ -37,10 +51,10 @@ const TSInput: React.FC<TSInputProps> = ({
     <div className={clx(`flex flex-col w-full relative`, className)}>
       <span className='text-xs text-gray-500 absolute -mt-2 ml-4'>{label}:</span>
       <input
-        onChange={e => setText(e.target.value)}
         {...props}
         value={text}
         onBlur={handleBlur}
+        onChange={handleChange}
         className={clx(`w-full p-2 outline-none text-gray-700`, {shadow, border})}
       />
     </div>

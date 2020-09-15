@@ -56,7 +56,7 @@ export const SignIn = () => {
             label='Password'
             type='Password'
             value={password}
-            onChange={e => setCredentials(state => ({...state, password: e.currentTarget.value}))}
+            onChange={e => setCredentials(state => ({...state, password: e.target.value}))}
           />
           {register !== null && (
             <TSInput
