@@ -6,6 +6,7 @@ import TSInputContainer from './TSInputContainer';
 export type TSInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   shadow?: boolean;
   border?: boolean;
+  filled?: boolean;
   label?: string;
   value?: string;
   onInputChange?: (value: string) => void;
@@ -17,6 +18,7 @@ const TSInput: React.FC<TSInputProps> = ({
   className,
   shadow,
   border,
+  filled,
   onChange,
   onInputChange,
   ...props
@@ -57,10 +59,11 @@ const TSInput: React.FC<TSInputProps> = ({
         value={text}
         onBlur={handleBlur}
         onChange={handleChange}
-        className={clx(`w-full p-2 outline-none text-gray-700 focus:bg-gray-100`, {
-          shadow,
-          border,
-        })}
+        className={clx(
+          `w-full p-2 outline-none text-gray-700 focus:bg-gray-100`,
+          filled ? 'bg-gray-200' : '',
+          {shadow, border}
+        )}
       />
     </TSInputContainer>
   );

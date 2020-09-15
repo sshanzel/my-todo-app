@@ -6,6 +6,7 @@ import TSInputContainer from './TSInputContainer';
 export type TSDatePickerProps = React.InputHTMLAttributes<HTMLDataElement> & {
   shadow?: boolean;
   border?: boolean;
+  filled?: boolean;
   value?: Date;
   label?: string;
   format?: Intl.DateTimeFormat;
@@ -32,6 +33,7 @@ const TSDatePicker: React.FC<TSDatePickerProps> = ({
   value,
   format,
   label,
+  filled,
   className,
   onDateChange,
   ...props
@@ -58,10 +60,11 @@ const TSDatePicker: React.FC<TSDatePickerProps> = ({
         {...props}
         type='date'
         style={{paddingTop: '12px'}}
-        className={clx(`w-full p-2 outline-none text-gray-700 focus:bg-gray-100`, {
-          shadow,
-          border,
-        })}
+        className={clx(
+          `w-full p-2 outline-none text-gray-700 focus:bg-gray-100`,
+          filled ? 'bg-gray-200' : '',
+          {shadow, border}
+        )}
         onChange={handleChange}
         value={getFormattedValue(date, format)}
       />

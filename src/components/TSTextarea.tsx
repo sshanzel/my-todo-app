@@ -6,6 +6,7 @@ import TSInputContainer from './TSInputContainer';
 export type TSTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   shadow?: boolean;
   border?: boolean;
+  filled?: boolean;
   label?: string;
   value?: string;
   onInputChange?: (value: string) => void;
@@ -18,6 +19,7 @@ const TSTextarea: React.FC<TSTextareaProps> = ({
   className,
   shadow,
   border,
+  filled,
   onChange,
   onInputChange,
   ...props
@@ -58,10 +60,11 @@ const TSTextarea: React.FC<TSTextareaProps> = ({
         value={text}
         onBlur={handleBlur}
         onChange={handleChange}
-        className={clx(`w-full p-2 outline-none text-gray-700 focus:bg-gray-100`, {
-          shadow,
-          border,
-        })}
+        className={clx(
+          `w-full p-2 outline-none text-gray-700 focus:bg-gray-100`,
+          filled ? 'bg-gray-200' : '',
+          {shadow, border}
+        )}
       />
     </TSInputContainer>
   );
