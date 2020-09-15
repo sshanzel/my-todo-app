@@ -1,8 +1,11 @@
 import React from 'react';
+import clx from 'classnames';
 import TSInputLabel from './TSInputLabel';
 import TSInputContainer from './TSInputContainer';
 
-export type TSDatePickerProps = React.HTMLAttributes<HTMLDataElement> & {
+export type TSDatePickerProps = React.InputHTMLAttributes<HTMLDataElement> & {
+  shadow?: boolean;
+  border?: boolean;
   value?: Date;
   label?: string;
   format?: Intl.DateTimeFormat;
@@ -24,11 +27,14 @@ const getFormattedValue = (value?: Date, format?: Intl.DateTimeFormat): string =
 };
 
 const TSDatePicker: React.FC<TSDatePickerProps> = ({
+  shadow,
+  border,
   value,
   format,
   label,
   className,
   onDateChange,
+  ...props
 }) => {
   const [date, setDate] = React.useState(() => new Date());
 
@@ -49,9 +55,13 @@ const TSDatePicker: React.FC<TSDatePickerProps> = ({
     <TSInputContainer className={className}>
       <TSInputLabel>{label}</TSInputLabel>
       <input
+        {...props}
         type='date'
         style={{paddingTop: '12px'}}
-        className='w-full p-2 outline-none text-gray-700 focus:bg-gray-100'
+        className={clx(`w-full p-2 outline-none text-gray-700 focus:bg-gray-100`, {
+          shadow,
+          border,
+        })}
         onChange={handleChange}
         value={getFormattedValue(date, format)}
       />
