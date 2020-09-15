@@ -60,8 +60,8 @@ const TSInput: React.FC<TSInputProps> = ({
         onBlur={handleBlur}
         onChange={handleChange}
         className={clx(
-          `w-full p-2 outline-none text-gray-700 focus:bg-gray-100`,
-          filled ? 'bg-gray-200' : '',
+          `w-full p-2 outline-none text-gray-700 focus:bg-gray-200`,
+          filled ? 'bg-gray-100' : '',
           {shadow, border}
         )}
       />

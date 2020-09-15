@@ -57,7 +57,7 @@ const TSButton: React.FC<TSButtonProps> = ({
     <div className={clx('shadow', className)}>
       <button
         className={clx(
-          'text-white px-4 w-full py-2 focus:outline-none',
+          'text-white px-4 h-full w-full py-2 focus:outline-none',
           !disabled && `hover:${button_type.hover}`,
           disabled ? button_type.disabled : button_type.base
         )}
