@@ -1,5 +1,7 @@
 import React from 'react';
 import clx from 'classnames';
+import TSInputLabel from './TSInputLabel';
+import TSInputContainer from './TSInputContainer';
 
 export type TSInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   shadow?: boolean;
@@ -48,16 +50,19 @@ const TSInput: React.FC<TSInputProps> = ({
   }, [value]);
 
   return (
-    <div className={clx(`flex flex-col w-full relative`, className)}>
-      <span className='text-xs text-gray-500 absolute -mt-2 ml-4'>{label}:</span>
+    <TSInputContainer className={className}>
+      <TSInputLabel>{label}</TSInputLabel>
       <input
         {...props}
         value={text}
         onBlur={handleBlur}
         onChange={handleChange}
-        className={clx(`w-full p-2 outline-none text-gray-700`, {shadow, border})}
+        className={clx(`w-full p-2 outline-none text-gray-700 focus:bg-gray-100`, {
+          shadow,
+          border,
+        })}
       />
-    </div>
+    </TSInputContainer>
   );
 };
 

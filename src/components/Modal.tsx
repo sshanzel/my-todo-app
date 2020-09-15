@@ -28,12 +28,12 @@ const SimpleModal: React.FC<SimpleModalProps> = ({
       style={{backgroundColor: '#00000080'}}
       className={`${WRAPPER_CLASS} ${
         open ? 'flex' : 'hidden'
-      } fixed top-0 left-0 w-screen h-screen z-10 items-center justify-center p-4`}
+      } fixed top-0 left-0 w-screen h-screen z-10 items-center justify-center`}
     >
       {!defaultLayout ? (
         children
       ) : (
-        <div className='bg-white w-full p-4 justify-center lg:w-1/3 md:w-1/2'>{children}</div>
+        <div className='bg-white w-full justify-center lg:w-1/3 md:w-1/2'>{children}</div>
       )}
     </div>
   );

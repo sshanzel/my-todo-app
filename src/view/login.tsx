@@ -46,23 +46,23 @@ export const SignIn = () => {
           {error && <div className='w-full mb-4 flex justify-center text-red-500'>{error}</div>}
           <TSInput
             shadow
-            label='Username'
             value={username}
+            label='Username:'
             onInputChange={value => setCredentials(state => ({...state, username: value}))}
           />
           <TSInput
             shadow
             className='mt-4'
-            label='Password'
             type='Password'
             value={password}
+            label='Password:'
             onChange={e => setCredentials(state => ({...state, password: e.target.value}))}
           />
           {register !== null && (
             <TSInput
               shadow
+              label='Name:'
               className='mt-4'
-              label='Name'
               value={password}
               onInputChange={value => setRegister(value)}
             />
