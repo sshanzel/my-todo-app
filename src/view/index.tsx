@@ -60,8 +60,6 @@ const TodoApp: React.FC<TodoAppProps> = () => {
   const handleTodoClick = (e: React.MouseEvent, todo: Todo) => {
     const el = e.target as HTMLElement;
 
-    console.log(e.target, el.classList.contains(TODO_ACTION));
-
     if (el.classList.contains(TODO_ACTION)) return;
 
     setTodo(todo);
