@@ -2,6 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import TodoList from './TodoList';
 import TodoItem from './TodoItem';
+import {TODO_ACTION} from './TodoCard';
 import {RootState} from '../store/reducers';
 import AddTodo from '../components/AddTodo';
 import SimpleModal from '../components/Modal';
@@ -49,12 +50,29 @@ const TodoApp: React.FC<TodoAppProps> = () => {
     dispatch(deleteTodo(todo));
   };
 
+  const handleComplete = (todo: Todo) => {
+    setTodo(undefined);
+    setTimeout(() => {});
+
+    dispatch(updateTodo({...todo, completed: !todo.completed}));
+  };
+
+  const handleTodoClick = (e: React.MouseEvent, todo: Todo) => {
+    const el = e.target as HTMLElement;
+
+    console.log(e.target, el.classList.contains(TODO_ACTION));
+
+    if (el.classList.contains(TODO_ACTION)) return;
+
+    setTodo(todo);
+  };
+
   return (
     <div className='flex flex-1 flex-col mt-4'>
       <div className='mb-4'>
         <AddTodo onClick={() => setTodo(() => initTodo())} />
       </div>
-      <TodoList todos={todos} onTodoClick={(t: Todo) => setTodo(t)} />
+      <TodoList todos={todos} onTodoClick={handleTodoClick} onComplete={handleComplete} />
       <SimpleModal open={!!todo} onClose={() => setTodo(undefined)}>
         <TodoItem todo={todo} onSave={handleSave} onDelete={handleDelete} onChange={handleChange} />
       </SimpleModal>

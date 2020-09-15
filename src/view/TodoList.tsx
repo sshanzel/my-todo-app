@@ -1,25 +1,25 @@
 import React from 'react';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import TodoCard from './TodoCard';
-import TodoAction from './TodoAction';
 import {Todo} from '../store/reducers/types';
-import TSButtonPlain from '../components/TSButtonPlain';
+import TSClickable from '../components/TSClickable';
 
 export interface TodoListProps {
   todos: Todo[];
-  onTodoClick: (todo: Todo) => void;
+  onComplete: (todo: Todo) => void;
+  onTodoClick: (e: React.MouseEvent, todo: Todo) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({todos, onTodoClick}) => {
+const TodoList: React.FC<TodoListProps> = ({todos, onComplete, onTodoClick}) => {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4'>
       {todos.map(todo => (
-        <TSButtonPlain onClick={() => onTodoClick(todo)} contentClassName='text-gray-700'>
-          <div key={todo._id} className='flex flex-col w-full shadow p-2 items-start bg-white'>
-            <TodoAction todo={todo} />
-            <TodoCard todo={todo} />
-          </div>
-        </TSButtonPlain>
+        <TSClickable
+          key={todo._id}
+          onClick={e => onTodoClick(e, todo)}
+          className='flex justify-center'
+        >
+          <TodoCard key={todo._id} todo={todo} onComplete={onComplete} shadow />
+        </TSClickable>
       ))}
     </div>
   );
