@@ -3,7 +3,7 @@ import clx from 'classnames';
 import TSInputLabel from './TSInputLabel';
 import TSInputContainer from './TSInputContainer';
 
-export type TSDatePickerProps = React.InputHTMLAttributes<HTMLDataElement> & {
+export type TSDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
   shadow?: boolean;
   border?: boolean;
   filled?: boolean;
