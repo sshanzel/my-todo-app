@@ -54,7 +54,7 @@ const TodoApp: React.FC<TodoAppProps> = () => {
       <div className='mb-4'>
         <AddTodo onClick={() => setTodo(() => initTodo())} />
       </div>
-      <TodoList todos={todos} onClick={(t: Todo) => setTodo(t)} />
+      <TodoList todos={todos} onTodoClick={(t: Todo) => setTodo(t)} />
       <SimpleModal open={!!todo} onClose={() => setTodo(undefined)}>
         <TodoItem todo={todo} onSave={handleSave} onDelete={handleDelete} onChange={handleChange} />
       </SimpleModal>
