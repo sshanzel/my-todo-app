@@ -67,20 +67,17 @@ export const SignIn = () => {
               onInputChange={value => setRegister(value)}
             />
           )}
-          <TSButton onClick={handleSubmit} disabled={processing}>
+          <TSButton onClick={handleSubmit} disabled={processing} className='mt-4'>
             Submit
           </TSButton>
         </form>
         <div className='flex flex-row flex-1 flex-wrap justify-between'>
-          <TSButtonPlain label='Forgot Password?' />
-          <TSButtonPlain
-            label={
-              register !== null
-                ? 'Have an existing account? Sign-in now!'
-                : `Don't have an account yet? Register now!`
-            }
-            onClick={() => setRegister(register !== null ? null : '')}
-          />
+          <TSButtonPlain>Forgot Password?</TSButtonPlain>
+          <TSButtonPlain onClick={() => setRegister(register !== null ? null : '')}>
+            {register !== null
+              ? 'Have an existing account? Sign-in now!'
+              : `Don't have an account yet? Register now!`}
+          </TSButtonPlain>
         </div>
         <Copyright />
       </ResponsiveBlock>

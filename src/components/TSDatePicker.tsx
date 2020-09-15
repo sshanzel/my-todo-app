@@ -50,7 +50,7 @@ const TSDatePicker: React.FC<TSDatePickerProps> = ({
 
       onDateChange(new Date(getFormattedValue(date)));
     },
-    [value]
+    [onDateChange]
   );
 
   return (

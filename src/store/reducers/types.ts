@@ -1,6 +1,7 @@
 export const initTodo = (): Todo => ({
   _id: '',
   title: '',
+  completed: false,
 });
 
 export interface Todo {
@@ -8,4 +9,5 @@ export interface Todo {
   title: string;
   description?: string;
   due?: Date & string;
+  completed: boolean;
 }
