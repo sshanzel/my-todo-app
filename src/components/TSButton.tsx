@@ -19,6 +19,12 @@ const SECONDARY: BUTTON_TYPE = {
   disabled: 'bg-teal-200',
 };
 
+const TERTIARY: BUTTON_TYPE = {
+  base: 'bg-red-500',
+  hover: 'bg-red-400',
+  disabled: 'bg-red-200',
+};
+
 export type BUTTON_TYPES = {
   PRIMARY: BUTTON_TYPE;
   SECONDARY?: BUTTON_TYPE;
@@ -30,29 +36,37 @@ export type BUTTON_TYPES = {
 export const TSBUTTON_TYPES: BUTTON_TYPES = {
   PRIMARY,
   SECONDARY,
+  TERTIARY,
 };
 
 export type TSButtonProps = React.ButtonHTMLAttributes<HTMLElement> & {
-  label?: string;
   disabled?: boolean;
   buttonType?: keyof BUTTON_TYPES;
 };
 
-const TSButton: React.FC<TSButtonProps> = ({label, disabled, buttonType = 'PRIMARY', ...rest}) => {
+const TSButton: React.FC<TSButtonProps> = ({
+  disabled,
+  buttonType = 'PRIMARY',
+  className,
+  children,
+  ...rest
+}) => {
   const button_type = TSBUTTON_TYPES[buttonType] || TSBUTTON_TYPES['PRIMARY'];
 
   return (
-    <button
-      className={clx(
-        'text-white px-4 mt-4 w-full py-2 focus:outline-none',
-        !disabled && `hover:${button_type.hover}`,
-        disabled ? button_type.disabled : button_type.base
-      )}
-      disabled={disabled}
-      {...rest}
-    >
-      {label}
-    </button>
+    <div className={clx('shadow', className)}>
+      <button
+        className={clx(
+          'text-white px-4 w-full py-2 focus:outline-none',
+          !disabled && `hover:${button_type.hover}`,
+          disabled ? button_type.disabled : button_type.base
+        )}
+        disabled={disabled}
+        {...rest}
+      >
+        {children}
+      </button>
+    </div>
   );
 };
 

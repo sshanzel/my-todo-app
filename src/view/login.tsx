@@ -67,7 +67,9 @@ export const SignIn = () => {
               onInputChange={value => setRegister(value)}
             />
           )}
-          <TSButton label='Submit' onClick={handleSubmit} disabled={processing} />
+          <TSButton onClick={handleSubmit} disabled={processing}>
+            Submit
+          </TSButton>
         </form>
         <div className='flex flex-row flex-1 flex-wrap justify-between'>
           <TSButtonPlain label='Forgot Password?' />
